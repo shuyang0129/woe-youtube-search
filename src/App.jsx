@@ -1,13 +1,9 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
-import { searchVideo } from '@api'
+import Home from '@pages/Home'
 
 const App = () => {
-  useEffect(() => {
-    // searchVideo('snippet').then(res => console.log(res))
-  }, [])
-
-  return <div>Appppp${process.env.REACT_APP_KEY}</div>
+  return <Home />
 }
 
 export default App
