@@ -1,12 +1,16 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+
+import { search } from '@actions/pageInfoActions'
+
 import * as S from './style'
 
 const SearchBar = () => {
   const [searchKeyword, setSearchKeyword] = useState('')
+  const dispatch = useDispatch()
 
   const updateSearchKeyword = e => {
-    // 防止開頭輸入空白
-    const input = e.target.value.replace(/^\s*/, '')
+    const input = e.target.value
 
     setSearchKeyword(input)
   }
@@ -14,10 +18,8 @@ const SearchBar = () => {
   const submitSearchKeyword = () => {
     // 1) 取得使用者欲搜尋的關鍵字
     const keyword = searchKeyword.trim()
-    // 2) 清空輸入框
-    setSearchKeyword('')
-    // TODO: 搜尋
-    console.log(keyword)
+    // 2) 搜尋
+    dispatch(search(keyword))
   }
 
   return (

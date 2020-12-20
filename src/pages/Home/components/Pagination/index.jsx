@@ -1,48 +1,55 @@
 import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+
 import * as S from './style'
 
+import {
+  goNextPage,
+  goPreviousPage,
+  goNthPage,
+} from '@actions/pageInfoActions'
 import {
   sequenceArray,
   incrementElementBy1,
   decrementElementBy1,
 } from '@utils'
 
-const Pagination = ({ totalResults = 50, resultPerPage = 10 }) => {
-  const [currentPage, setCurrentPage] = useState(1)
+const Pagination = () => {
   const [paginationRange, setPaginationRange] = useState([])
+  const { totalPages, currentPage } = useSelector(state => state)
+  const dispatch = useDispatch()
 
   // 到下一頁
-  const goNextPage = () => setCurrentPage(current => current + 1)
+  const goToNextPage = () => dispatch(goNextPage())
 
   // 到上一頁
-  const goPreviousPage = () => setCurrentPage(current => current - 1)
+  const goToPreviousPage = () => dispatch(goPreviousPage())
 
   // 到第n頁
-  const goToPage = n => () => setCurrentPage(n)
+  const goToNthPage = n => () => dispatch(goNthPage(n))
 
   useEffect(() => {
-    // 如果回傳筆數為0，return
-    if (totalResults === 0) return
+    // 如果總頁數為0，return
+    if (!totalPages) return
 
-    // 1) 計算總頁數，無條件進位
-    let paginationLength = Math.ceil(totalResults / resultPerPage)
-    // 2) pagination最多一次顯示不超過3頁
-    paginationLength = Math.min(paginationLength, 3)
-    // 3) 設定pagination array，ex: [1, 2, 3]
+    // 1) pagination最多一次顯示不超過3頁
+    const paginationLength = Math.min(totalPages, 3)
+    console.log(
+      '🚀 ~ file: index.jsx ~ line 37 ~ useEffect ~ paginationLength',
+      paginationLength
+    )
+    // 2) 設定pagination array，ex: [1, 2, 3]
     setPaginationRange(sequenceArray(paginationLength, 1))
-  }, [totalResults, resultPerPage])
+  }, [totalPages])
 
   useEffect(() => {
     // 如果paginationRange的長度為0，不執行接下來的步驟
-    if (paginationRange.length === 0) return
-
-    // 取得總頁數
-    const paginationLength = Math.ceil(totalResults / resultPerPage)
+    if (totalPages === 0 || paginationRange.length === 0) return
 
     // 如果目前的分頁是paginationRange中最大，且小於總頁數，將陣列中每個元素加1
     if (
       currentPage === Math.max(...paginationRange) &&
-      currentPage < paginationLength
+      currentPage < totalPages
     ) {
       return setPaginationRange(incrementElementBy1)
     }
@@ -54,16 +61,16 @@ const Pagination = ({ totalResults = 50, resultPerPage = 10 }) => {
     ) {
       return setPaginationRange(decrementElementBy1)
     }
-  }, [currentPage, paginationRange, resultPerPage, totalResults])
+  }, [currentPage, paginationRange, totalPages])
 
-  // 如果總筆數為0，不顯示pagination
-  if (totalResults === 0) return null
+  // 如果總頁數為0，不顯示pagination
+  if (totalPages === 0) return null
 
   return (
     <S.Pagination>
       <S.PaginationToward
         disabled={currentPage === 1}
-        onClick={goPreviousPage}
+        onClick={goToPreviousPage}
       >
         &laquo;
       </S.PaginationToward>
@@ -71,16 +78,14 @@ const Pagination = ({ totalResults = 50, resultPerPage = 10 }) => {
         <S.PaginationNumber
           key={pageNum}
           disabled={pageNum === currentPage}
-          onClick={goToPage(pageNum)}
+          onClick={goToNthPage(pageNum)}
         >
           {pageNum}
         </S.PaginationNumber>
       ))}
       <S.PaginationToward
-        disabled={
-          currentPage === Math.ceil(totalResults / resultPerPage)
-        }
-        onClick={goNextPage}
+        disabled={currentPage === totalPages}
+        onClick={goToNextPage}
       >
         &raquo;
       </S.PaginationToward>

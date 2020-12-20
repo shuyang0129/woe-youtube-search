@@ -8,7 +8,7 @@ export const searchVideo = keyword => {
     url: '/search',
     params: {
       part: 'snippet',
-      maxResults: 1,
+      maxResults: 35,
       type: 'video',
       eventType: 'completed',
       q: encodeURIComponent(keyword), // URL-escaped when sent request

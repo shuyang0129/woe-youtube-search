@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const SearchResultItem = styled.div`
+export const SearchResultItem = styled.a`
   width: 100%;
   margin-bottom: 16px;
   box-sizing: border-box;

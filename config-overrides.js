@@ -23,10 +23,17 @@ module.exports = function override(config, env) {
   config = rewireAliases.aliasesOptions({
     '@': path.resolve(__dirname, `${paths.appSrc}/`),
     '@assets': path.resolve(__dirname, `${paths.appSrc}/assets/`),
-    '@components': path.resolve(__dirname,`${paths.appSrc}/components/`),
+    '@components': path.resolve(
+      __dirname,
+      `${paths.appSrc}/components/`
+    ),
     '@pages': path.resolve(__dirname, `${paths.appSrc}/pages/`),
     '@api': path.resolve(__dirname, `${paths.appSrc}/api/`),
-    '@constants': path.resolve(__dirname, `${paths.appSrc}/constants/`),
+    '@actions': path.resolve(__dirname, `${paths.appSrc}/actions/`),
+    '@constants': path.resolve(
+      __dirname,
+      `${paths.appSrc}/constants/`
+    ),
     '@utils': path.resolve(__dirname, `${paths.appSrc}/utils/`),
   })(config, env)
   return config

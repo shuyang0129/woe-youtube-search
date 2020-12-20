@@ -16,9 +16,9 @@ const PaginationItemDefault = styled.button`
   font-size: 12px;
   height: 32px;
   margin-right: 8px;
-  width: 32px;
   transition: background-color 0.1s ease-out 0.1s,
     color 0.1s ease-out 0.1s;
+  width: 32px;
 
   &:hover:enabled {
     background-color: #f2e9e4;

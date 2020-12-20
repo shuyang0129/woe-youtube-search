@@ -1,0 +1,4 @@
+export const GO_NEXT_PAGE = 'GO_NEXT_PAGE'
+export const GO_PREVIOUS_PAGE = 'GO_PREVIOUS_PAGE'
+export const GO_NTH_PAGE = 'GO_NTH_PAGE'
+export const UPDATE_PAGE_INFO = 'UPDATE_PAGE_INFO'
