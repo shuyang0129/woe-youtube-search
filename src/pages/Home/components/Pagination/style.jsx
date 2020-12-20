@@ -10,25 +10,30 @@ export const Pagination = styled.div`
   width: 100%;
 `
 
-export const PaginationItem = styled.button.attrs(({ active }) => {
-  if (active) {
-    return {
-      style: {
-        backgroundColor: '#fe4066',
-        color: 'white',
-      },
-    }
-  }
-})`
+const PaginationItemDefault = styled.button`
   border-radius: 50%;
   color: black;
   font-size: 12px;
   height: 32px;
   margin-right: 8px;
   width: 32px;
-  transition: background-color 0.1s ease-in;
+  transition: background-color 0.1s ease-out 0.1s,
+    color 0.1s ease-out 0.1s;
 
-  &:hover {
+  &:hover:enabled {
     background-color: #f2e9e4;
+  }
+`
+
+export const PaginationNumber = styled(PaginationItemDefault)`
+  &:disabled {
+    background-color: #fe4066;
+    color: white;
+  }
+`
+
+export const PaginationToward = styled(PaginationItemDefault)`
+  &:disabled {
+    opacity: 0.38;
   }
 `
