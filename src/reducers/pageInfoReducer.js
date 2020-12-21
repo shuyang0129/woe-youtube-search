@@ -1,8 +1,8 @@
 import * as actionTypes from '@constants/actionTypes'
 
 const initialState = {
-  totalResults: 50,
-  totalPages: 5,
+  totalResults: 0,
+  totalPages: 0,
   resultsPerPage: 10,
   searchKeyword: '',
   currentPage: 1,
