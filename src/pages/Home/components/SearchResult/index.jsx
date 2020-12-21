@@ -11,7 +11,7 @@ const SearchResult = () => {
 
   useEffect(() => {
     const begin = (currentPage - 1) * 10 + 1
-    const end = (currentPage - 1) * 10 + 10
+    const end = (currentPage - 1) * 10 + 10 + 1
 
     setDisplaySearchResult(currentSearchResult.slice(begin, end))
   }, [currentPage, setDisplaySearchResult, currentSearchResult])
