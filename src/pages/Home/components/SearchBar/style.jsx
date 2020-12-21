@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+
 import SearchIcon from '@assets/images/icon__search_white.svg'
 
 export const SearchBarContainer = styled.header`
