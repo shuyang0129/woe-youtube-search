@@ -8,9 +8,8 @@ export const search = searchKeyword => async (dispatch, getState) => {
   const { searchResultHistory } = getState()
 
   // 如果在搜尋紀錄中找到曾經搜尋過的紀錄，將對應結果賦給searchResult變數
-  if (encodeURIComponent(searchKeyword) in searchResultHistory) {
-    searchResult =
-      searchResultHistory[encodeURIComponent(searchKeyword)]
+  if (searchKeyword in searchResultHistory) {
+    searchResult = searchResultHistory[searchKeyword]
   }
 
   // 如果搜尋紀錄中沒有找到對應紀錄，從API取得
@@ -51,7 +50,7 @@ export const search = searchKeyword => async (dispatch, getState) => {
     dispatch({
       type: actionTypes.UPDATE_SEARCH_RESULT_HISTORY,
       payload: {
-        [encodeURIComponent(searchKeyword)]: searchResult,
+        [searchKeyword]: searchResult,
       },
     })
 

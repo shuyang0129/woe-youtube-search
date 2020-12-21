@@ -11,7 +11,7 @@ export const searchVideo = keyword => {
       maxResults: 35,
       type: 'video',
       eventType: 'completed',
-      q: encodeURIComponent(keyword), // URL-escaped when sent request
+      q: keyword,
       key: process.env.REACT_APP_KEY,
     },
   })
