@@ -54,7 +54,7 @@ export const SearchResultItem = styled.a`
 `
 
 export const SearchResult = styled.div`
-  padding: 16px;
+  padding: 32px 16px;
   width: 100%;
   display: flex;
   flex-flow: row wrap;
