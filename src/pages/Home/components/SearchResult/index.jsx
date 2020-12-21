@@ -33,7 +33,8 @@ const SearchResult = () => {
     )
   }
 
-  if (!currentSearchResult) return null
+  if (currentSearchResult.length === 0)
+    return <S.EmptyResult>No Results</S.EmptyResult>
 
   return (
     <S.SearchResult>

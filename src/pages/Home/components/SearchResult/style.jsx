@@ -54,9 +54,20 @@ export const SearchResultItem = styled.a`
 `
 
 export const SearchResult = styled.div`
-  padding: 32px 16px;
-  width: 100%;
+  align-content: flex-start;
   display: flex;
   flex-flow: row wrap;
-  align-content: flex-start;
+  padding: 32px 16px;
+  width: 100%;
+`
+
+export const EmptyResult = styled.p`
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 14px;
+  font-style: italic;
+  font-weight: medium;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
 `
