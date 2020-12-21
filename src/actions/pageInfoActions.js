@@ -16,9 +16,9 @@ export const search = searchKeyword => async (dispatch, getState) => {
   if (!searchResult) {
     dispatch(openLoader())
 
-    const res = await searchVideo(searchKeyword).catch(err => {
-      console.error(err)
-    })
+    const res = await searchVideo(searchKeyword)
+      .catch(err => console.error(err))
+      .finally(() => dispatch(closeLoader()))
     // 如果請求成功，將對應結果賦給searchResult變數
     if (res && res.status === 200) searchResult = res.data
   }
@@ -50,8 +50,6 @@ export const search = searchKeyword => async (dispatch, getState) => {
         [searchKeyword]: searchResult,
       })
     )
-
-    dispatch(closeLoader())
   }
 }
 
@@ -65,6 +63,11 @@ export const updateSearchResultHistory = newSearchResultHistory => ({
   payload: newSearchResultHistory,
 })
 
+export const updateCurrentSearchResult = newCurrentSearchResult => ({
+  type: actionTypes.UPDATE_CURRENT_SEARCH_RESULT,
+  payload: newCurrentSearchResult,
+})
+
 export const goNextPage = () => ({
   type: actionTypes.GO_NEXT_PAGE,
 })
@@ -74,6 +77,39 @@ export const goPreviousPage = () => ({
 })
 
 export const goNthPage = nth => async (dispatch, getState) => {
+  const {
+    currentResults,
+    totalResults,
+    searchResultHistory,
+    searchKeyword,
+  } = getState()
+
+  if (nth * 10 > currentResults) {
+    if (currentResults < totalResults) {
+      const { nextPageToken, items } = searchResultHistory[
+        searchKeyword
+      ]
+
+      dispatch(openLoader())
+
+      const res = await searchVideo(searchKeyword, nextPageToken)
+        .catch(err => console.error(err))
+        .finally(() => dispatch(closeLoader()))
+
+      if (res && res.status === 200) {
+        const newSearchResult = res.data
+        newSearchResult.items = [...items, ...newSearchResult.items]
+
+        dispatch(
+          updateSearchResultHistory({
+            [searchKeyword]: newSearchResult,
+          })
+        )
+        dispatch(updateCurrentSearchResult(newSearchResult.items))
+      }
+    }
+  }
+
   dispatch({
     type: actionTypes.GO_NTH_PAGE,
     payload: nth,

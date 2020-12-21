@@ -28,6 +28,14 @@ export const pageInfoReducer = (state = initialState, action) => {
       }
     }
 
+    case actionTypes.UPDATE_CURRENT_SEARCH_RESULT: {
+      return {
+        ...state,
+        currentResults: action.payload.length,
+        currentSearchResult: action.payload,
+      }
+    }
+
     case actionTypes.GO_NEXT_PAGE: {
       const { currentPage, totalPages } = state
 
