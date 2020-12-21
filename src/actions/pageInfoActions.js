@@ -32,7 +32,7 @@ export const search = searchKeyword => async (dispatch, getState) => {
     } = searchResult
 
     // 組成新的State
-    const newState = {
+    const nePageInfo = {
       searchKeyword,
       totalResults,
       totalPages: Math.ceil(totalResults / 10),
@@ -41,22 +41,28 @@ export const search = searchKeyword => async (dispatch, getState) => {
     }
 
     // 更新pageInfo
-    dispatch({
-      type: actionTypes.UPDATE_PAGE_INFO,
-      payload: newState,
-    })
+    dispatch(updatePageInfo(nePageInfo))
 
     // 新增搜尋紀錄
-    dispatch({
-      type: actionTypes.UPDATE_SEARCH_RESULT_HISTORY,
-      payload: {
+    dispatch(
+      updateSearchResultHistory({
         [searchKeyword]: searchResult,
-      },
-    })
+      })
+    )
 
     dispatch(closeLoader())
   }
 }
+
+export const updatePageInfo = newPageInfo => ({
+  type: actionTypes.UPDATE_PAGE_INFO,
+  payload: newPageInfo,
+})
+
+export const updateSearchResultHistory = newSearchResultHistory => ({
+  type: actionTypes.UPDATE_SEARCH_RESULT_HISTORY,
+  payload: newSearchResultHistory,
+})
 
 export const goNextPage = () => ({
   type: actionTypes.GO_NEXT_PAGE,

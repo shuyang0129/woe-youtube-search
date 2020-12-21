@@ -1,37 +1,37 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { search } from '@actions/pageInfoActions'
 
 import * as S from './style'
 
 const SearchBar = () => {
-  const [searchKeyword, setSearchKeyword] = useState('')
+  const { isLoading, searchKeyword } = useSelector(state => state)
+  const [keyword, setKeyword] = useState('')
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    setKeyword(searchKeyword)
+  }, [searchKeyword])
 
   const updateSearchKeyword = e => {
     const input = e.target.value
 
-    setSearchKeyword(input)
+    setKeyword(input)
   }
 
-  const submitSearchKeyword = () => {
-    // 1) 取得使用者欲搜尋的關鍵字
-    const keyword = searchKeyword.trim()
-    // 2) 搜尋
-    dispatch(search(keyword))
-  }
+  const submitSearchKeyword = () => dispatch(search(keyword))
 
   return (
     <S.SearchBarContainer>
       <S.SearchBar>
         <S.SearchBarInput
-          value={searchKeyword}
+          value={keyword}
           placeholder="Search by keywords"
           onChange={updateSearchKeyword}
         />
         <S.SearchBarButton
-          disabled={searchKeyword.length === 0}
+          disabled={isLoading}
           onClick={submitSearchKeyword}
         />
       </S.SearchBar>
