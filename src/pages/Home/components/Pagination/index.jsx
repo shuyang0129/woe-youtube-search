@@ -3,27 +3,13 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import * as S from './style'
 
-import {
-  goNextPage,
-  goPreviousPage,
-  goNthPage,
-} from '@actions/pageInfoActions'
-import {
-  sequenceArray,
-  incrementElementBy1,
-  decrementElementBy1,
-} from '@utils'
+import { goNthPage } from '@actions/pageInfoActions'
+import { sequenceArray } from '@utils'
 
 const Pagination = () => {
   const [paginationRange, setPaginationRange] = useState([])
   const { totalPages, currentPage } = useSelector(state => state)
   const dispatch = useDispatch()
-
-  // 到下一頁
-  const goToNextPage = () => dispatch(goNextPage())
-
-  // 到上一頁
-  const goToPreviousPage = () => dispatch(goPreviousPage())
 
   // 到第n頁
   const goToNthPage = n => () => dispatch(goNthPage(n))
@@ -33,10 +19,11 @@ const Pagination = () => {
     if (!totalPages) return
 
     // 1) pagination最多一次顯示不超過3頁
-    const paginationLength = Math.min(totalPages, 5)
+    const paginationLength =
+      currentPage > 5 ? currentPage : Math.min(totalPages, 5)
     // 2) 設定pagination array，ex: [1, 2, 3]
     setPaginationRange(sequenceArray(paginationLength, 1))
-  }, [totalPages])
+  }, [totalPages, currentPage])
 
   useEffect(() => {
     // 如果paginationRange的長度為0，不執行接下來的步驟
@@ -47,15 +34,7 @@ const Pagination = () => {
       currentPage === Math.max(...paginationRange) &&
       currentPage < totalPages
     ) {
-      return setPaginationRange(incrementElementBy1)
-    }
-
-    // 如果目前的分頁是paginationRange中最小，且大於1，將陣列中每個元素減1
-    if (
-      currentPage === Math.min(...paginationRange) &&
-      currentPage > 1
-    ) {
-      return setPaginationRange(decrementElementBy1)
+      return setPaginationRange(sequenceArray(currentPage + 1, 1))
     }
   }, [currentPage, paginationRange, totalPages])
 
@@ -63,29 +42,19 @@ const Pagination = () => {
   if (totalPages === 0) return null
 
   return (
-    <S.Pagination>
-      <S.PaginationToward
-        disabled={currentPage === 1}
-        onClick={goToPreviousPage}
-      >
-        &laquo;
-      </S.PaginationToward>
-      {paginationRange.map(pageNum => (
-        <S.PaginationNumber
-          key={pageNum}
-          disabled={pageNum === currentPage}
-          onClick={goToNthPage(pageNum)}
-        >
-          {pageNum}
-        </S.PaginationNumber>
-      ))}
-      <S.PaginationToward
-        disabled={currentPage === totalPages}
-        onClick={goToNextPage}
-      >
-        &raquo;
-      </S.PaginationToward>
-    </S.Pagination>
+    <S.PaginationContainer>
+      <S.Pagination>
+        {paginationRange.map(pageNum => (
+          <S.PaginationNumber
+            key={pageNum}
+            disabled={pageNum === currentPage}
+            onClick={goToNthPage(pageNum)}
+          >
+            {pageNum}
+          </S.PaginationNumber>
+        ))}
+      </S.Pagination>
+    </S.PaginationContainer>
   )
 }
 

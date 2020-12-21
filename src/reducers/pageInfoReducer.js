@@ -36,24 +36,6 @@ export const pageInfoReducer = (state = initialState, action) => {
       }
     }
 
-    case actionTypes.GO_NEXT_PAGE: {
-      const { currentPage, totalPages } = state
-
-      if (currentPage < totalPages) {
-        return { ...state, currentPage: currentPage + 1 }
-      }
-      return state
-    }
-
-    case actionTypes.GO_PREVIOUS_PAGE: {
-      const { currentPage } = state
-
-      if (currentPage > 1) {
-        return { ...state, currentPage: currentPage - 1 }
-      }
-      return state
-    }
-
     case actionTypes.GO_NTH_PAGE: {
       const { currentPage, totalPages } = state
 

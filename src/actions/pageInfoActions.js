@@ -68,14 +68,6 @@ export const updateCurrentSearchResult = newCurrentSearchResult => ({
   payload: newCurrentSearchResult,
 })
 
-export const goNextPage = () => ({
-  type: actionTypes.GO_NEXT_PAGE,
-})
-
-export const goPreviousPage = () => ({
-  type: actionTypes.GO_PREVIOUS_PAGE,
-})
-
 export const goNthPage = nth => async (dispatch, getState) => {
   const {
     currentResults,

@@ -1,13 +1,22 @@
 import styled from 'styled-components'
 
+export const PaginationContainer = styled.div`
+  align-items: center;
+  display: flex;
+  flex-flow: row wrap;
+  flex: 0 0 auto;
+  justify-content: center;
+  max-width: 1200px;
+  padding: 16px 32px;
+`
+
 export const Pagination = styled.div`
   align-items: center;
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
   flex: 0 0 auto;
-  justify-content: center;
-  padding: 16px 0;
-  width: 100%;
+  justify-content: flex-start;
+  max-width: 100%;
 `
 
 const PaginationItemDefault = styled.button`
@@ -29,11 +38,5 @@ export const PaginationNumber = styled(PaginationItemDefault)`
   &:disabled {
     background-color: #fe4066;
     color: white;
-  }
-`
-
-export const PaginationToward = styled(PaginationItemDefault)`
-  &:disabled {
-    opacity: 0.38;
   }
 `

@@ -10,16 +10,3 @@
 export const sequenceArray = (length, startNum = 0) => {
   return [...Array(length).keys()].map(n => n + startNum)
 }
-
-/**
- * @name incrementElementByN
- * @description 回傳一個函式，此函式帶入陣列後，會對陣列中的每個元素增加 n
- * @param {Number} n
- */
-const incrementElementByN = n => arr => arr.map(x => x + n)
-
-// 對陣列中每個元素 +1
-export const incrementElementBy1 = incrementElementByN(1)
-
-// 對陣列中每個元素 -1
-export const decrementElementBy1 = incrementElementByN(-1)
