@@ -19,4 +19,5 @@ export const MainContent = styled.main`
   overflow-y: scroll;
   position: relative;
   width: 100%;
+  height: 100%;
 `

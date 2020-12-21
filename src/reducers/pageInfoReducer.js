@@ -1,6 +1,7 @@
 import * as actionTypes from '@constants/actionTypes'
 
 const initialState = {
+  isLoading: false,
   totalResults: 0,
   totalPages: 0,
   resultsPerPage: 10,
@@ -51,6 +52,14 @@ export const pageInfoReducer = (state = initialState, action) => {
         return { ...state, currentPage: action.payload }
       }
       return state
+    }
+
+    case actionTypes.OPEN_LOADER: {
+      return { ...state, isLoading: true }
+    }
+
+    case actionTypes.CLOSE_LOADER: {
+      return { ...state, isLoading: false }
     }
 
     default: {

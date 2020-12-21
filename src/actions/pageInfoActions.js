@@ -15,6 +15,8 @@ export const search = searchKeyword => async (dispatch, getState) => {
 
   // 如果搜尋紀錄中沒有找到對應紀錄，從API取得
   if (!searchResult) {
+    dispatch(openLoader())
+
     const res = await searchVideo(searchKeyword).catch(err => {
       console.error(err)
     })
@@ -52,6 +54,8 @@ export const search = searchKeyword => async (dispatch, getState) => {
         [encodeURIComponent(searchKeyword)]: searchResult,
       },
     })
+
+    dispatch(closeLoader())
   }
 }
 
@@ -66,4 +70,12 @@ export const goPreviousPage = () => ({
 export const goNthPage = nth => ({
   type: actionTypes.GO_NTH_PAGE,
   payload: nth,
+})
+
+export const openLoader = nth => ({
+  type: actionTypes.OPEN_LOADER,
+})
+
+export const closeLoader = nth => ({
+  type: actionTypes.CLOSE_LOADER,
 })
