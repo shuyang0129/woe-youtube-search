@@ -16,6 +16,16 @@ export const pageInfoReducer = (state = initialState, action) => {
       return { ...state, ...action.payload }
     }
 
+    case actionTypes.UPDATE_SEARCH_RESULT_HISTORY: {
+      return {
+        ...state,
+        searchResultHistory: {
+          ...state.searchResultHistory,
+          ...action.payload,
+        },
+      }
+    }
+
     case actionTypes.GO_NEXT_PAGE: {
       const { currentPage, totalPages } = state
 
