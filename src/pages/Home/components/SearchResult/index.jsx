@@ -11,20 +11,19 @@ const SearchResult = () => {
 
   useEffect(() => {
     const begin = (currentPage - 1) * 10 + 1
-    const end = (currentPage - 1) * 10 + 10 + 1
+    const end = (currentPage - 1) * 10 + 11
 
     setDisplaySearchResult(currentSearchResult.slice(begin, end))
   }, [currentPage, setDisplaySearchResult, currentSearchResult])
 
-  const renderSearchResultItem = searchResultItem => {
+  const SearchResultItem = ({ item }) => {
     const {
       id: { videoId },
       snippet: { title, thumbnails },
-    } = searchResultItem
+    } = item
 
     return (
       <S.SearchResultItem
-        key={videoId}
         href={`https://www.youtube.com/watch?v=${videoId}`}
         target="blank"
       >
@@ -38,9 +37,12 @@ const SearchResult = () => {
 
   return (
     <S.SearchResult>
-      {displaySearchResult.map(searchResultItem => {
-        return <>{renderSearchResultItem(searchResultItem)}</>
-      })}
+      {displaySearchResult.map(searchResultItem => (
+        <SearchResultItem
+          item={searchResultItem}
+          key={searchResultItem.id.videoId}
+        />
+      ))}
     </S.SearchResult>
   )
 }
