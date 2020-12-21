@@ -33,11 +33,7 @@ const Pagination = () => {
     if (!totalPages) return
 
     // 1) pagination最多一次顯示不超過3頁
-    const paginationLength = Math.min(totalPages, 3)
-    console.log(
-      '🚀 ~ file: index.jsx ~ line 37 ~ useEffect ~ paginationLength',
-      paginationLength
-    )
+    const paginationLength = Math.min(totalPages, 5)
     // 2) 設定pagination array，ex: [1, 2, 3]
     setPaginationRange(sequenceArray(paginationLength, 1))
   }, [totalPages])
