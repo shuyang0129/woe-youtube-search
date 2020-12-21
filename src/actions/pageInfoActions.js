@@ -35,6 +35,7 @@ export const search = searchKeyword => async (dispatch, getState) => {
     const nePageInfo = {
       searchKeyword,
       totalResults,
+      currentResults: items.length,
       totalPages: Math.ceil(totalResults / 10),
       currentPage: 1,
       currentSearchResult: items,
@@ -72,10 +73,12 @@ export const goPreviousPage = () => ({
   type: actionTypes.GO_PREVIOUS_PAGE,
 })
 
-export const goNthPage = nth => ({
-  type: actionTypes.GO_NTH_PAGE,
-  payload: nth,
-})
+export const goNthPage = nth => async (dispatch, getState) => {
+  dispatch({
+    type: actionTypes.GO_NTH_PAGE,
+    payload: nth,
+  })
+}
 
 export const openLoader = nth => ({
   type: actionTypes.OPEN_LOADER,

@@ -3,6 +3,7 @@ import * as actionTypes from '@constants/actionTypes'
 const initialState = {
   isLoading: false,
   totalResults: 0,
+  currentResults: 0,
   totalPages: 0,
   resultsPerPage: 10,
   searchKeyword: '',
