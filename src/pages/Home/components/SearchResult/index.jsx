@@ -10,8 +10,8 @@ const SearchResult = () => {
   const [displaySearchResult, setDisplaySearchResult] = useState([])
 
   useEffect(() => {
-    const begin = (currentPage - 1) * 10 + 1
-    const end = (currentPage - 1) * 10 + 11
+    const begin = (currentPage - 1) * 10
+    const end = (currentPage - 1) * 10 + 10
 
     setDisplaySearchResult(currentSearchResult.slice(begin, end))
   }, [currentPage, setDisplaySearchResult, currentSearchResult])
