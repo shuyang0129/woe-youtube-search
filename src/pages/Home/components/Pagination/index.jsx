@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, memo } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import * as S from './style'
@@ -59,4 +59,4 @@ const Pagination = () => {
   )
 }
 
-export default Pagination
+export default memo(Pagination)

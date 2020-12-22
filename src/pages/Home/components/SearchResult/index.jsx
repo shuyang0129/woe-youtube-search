@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, memo } from 'react'
 import { useSelector } from 'react-redux'
 
 import * as S from './style'
@@ -60,4 +60,4 @@ const SearchResult = ({ scrollToTop }) => {
   )
 }
 
-export default SearchResult
+export default memo(SearchResult)

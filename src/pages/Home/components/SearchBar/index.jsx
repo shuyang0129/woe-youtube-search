@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, memo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { search } from '@actions/pageInfoActions'
@@ -39,4 +39,4 @@ const SearchBar = () => {
   )
 }
 
-export default SearchBar
+export default memo(SearchBar)
