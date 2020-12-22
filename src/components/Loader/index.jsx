@@ -5,6 +5,7 @@ import LoadingIcon from '@assets/images/icon__loading.svg'
 
 import * as S from './style'
 
+// Loading狀態開啟時，選染spinner
 const Loader = ({ children }) => {
   const { isLoading } = useSelector(state => state)
 

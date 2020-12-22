@@ -7,12 +7,13 @@ import { goNthPage } from '@actions/pageInfoActions'
 import { sequenceArray } from '@utils'
 
 const Pagination = () => {
-  const [paginationRange, setPaginationRange] = useState([])
-  const { totalPages, currentPage } = useSelector(state => state)
   const dispatch = useDispatch()
 
+  const [paginationRange, setPaginationRange] = useState([])
+  const { totalPages, currentPage } = useSelector(state => state)
+
   // 到第n頁
-  const goToNthPage = n => () => dispatch(goNthPage(n))
+  const goToNthPage = nth => () => dispatch(goNthPage(nth))
 
   useEffect(() => {
     // 如果總頁數為0，return
@@ -29,7 +30,7 @@ const Pagination = () => {
     // 如果paginationRange的長度為0，不執行接下來的步驟
     if (totalPages === 0 || paginationRange.length === 0) return
 
-    // 如果目前的分頁是paginationRange中最大，且小於總頁數，將陣列中每個元素加1
+    // 如果目前的分頁是paginationRange中最大，且小於總頁數，將陣列中多新增下一頁
     if (
       currentPage === Math.max(...paginationRange) &&
       currentPage < totalPages

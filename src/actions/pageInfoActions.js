@@ -74,44 +74,54 @@ export const goNthPage = nth => async (dispatch, getState) => {
     totalResults,
     searchResultHistory,
     searchKeyword,
+    totalPages,
   } = getState()
 
-  if (nth * 10 > currentResults) {
-    if (currentResults < totalResults) {
-      const { nextPageToken, items } = searchResultHistory[
-        searchKeyword
-      ]
+  // 超出總頁數，return
+  if (nth > totalPages) return
 
-      dispatch(openLoader())
+  // 如果點擊的頁面超過redux中儲存的資料，並且還在總筆數範圍內，請求下一頁資料
+  if (nth * 10 > currentResults && currentResults < totalResults) {
+    const { nextPageToken, items } = searchResultHistory[
+      searchKeyword
+    ]
 
-      const res = await searchVideo(searchKeyword, nextPageToken)
-        .catch(err => console.error(err))
-        .finally(() => dispatch(closeLoader()))
+    dispatch(openLoader())
 
-      if (res && res.status === 200) {
-        const newSearchResult = res.data
-        newSearchResult.items = [...items, ...newSearchResult.items]
+    const res = await searchVideo(searchKeyword, nextPageToken)
+      .catch(err => console.error(err))
+      .finally(() => dispatch(closeLoader()))
 
-        dispatch(
-          updateSearchResultHistory({
-            [searchKeyword]: newSearchResult,
-          })
-        )
-        dispatch(updateCurrentSearchResult(newSearchResult.items))
-      }
+    // 如果請求成功，擴充搜尋紀錄中的對應的搜尋結果
+    if (res && res.status === 200) {
+      const newSearchResult = res.data
+      newSearchResult.items = [...items, ...newSearchResult.items]
+
+      // 更新搜尋紀錄
+      dispatch(
+        updateSearchResultHistory({
+          [searchKeyword]: newSearchResult,
+        })
+      )
+
+      // 更新目前在頁面上的搜尋結果列表
+      dispatch(updateCurrentSearchResult(newSearchResult.items))
     }
   }
 
+  // 到下一頁
   dispatch({
     type: actionTypes.GO_NTH_PAGE,
     payload: nth,
   })
 }
 
+// 開啟loading動畫
 export const openLoader = nth => ({
   type: actionTypes.OPEN_LOADER,
 })
 
+// 關閉loading動畫
 export const closeLoader = nth => ({
   type: actionTypes.CLOSE_LOADER,
 })

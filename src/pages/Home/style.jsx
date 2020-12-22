@@ -14,10 +14,10 @@ export const Container = styled.div`
 
 export const MainContent = styled.main`
   flex: 1 1 0;
+  height: 100%;
   margin: 0 auto;
   max-width: 1200px;
   overflow-y: scroll;
   position: relative;
   width: 100%;
-  height: 100%;
 `

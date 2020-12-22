@@ -7,6 +7,7 @@ import * as S from './style'
 
 const SearchBar = () => {
   const dispatch = useDispatch()
+
   const { isLoading, searchKeyword } = useSelector(state => state)
   const [keyword, setKeyword] = useState('')
 

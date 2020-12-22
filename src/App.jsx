@@ -12,6 +12,7 @@ const App = () => {
   useEffect(() => {
     const storedPageInfo = JSON.parse(localStorage.getItem(PAGE_INFO))
 
+    // 載入時，如果localStorage有資料，同步到redux
     if (storedPageInfo) dispatch(updatePageInfo(storedPageInfo))
   }, [dispatch])
 

@@ -1,9 +1,3 @@
-import { combineReducers } from 'redux'
+import { pageInfoReducer } from './pageInfoReducer'
 
-import { pageInfoReducer as pageInfo } from './pageInfoReducer'
-
-const rootReducer = combineReducers({
-  pageInfo,
-})
-
-export default pageInfo
+export default pageInfoReducer
