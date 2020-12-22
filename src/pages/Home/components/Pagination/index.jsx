@@ -19,12 +19,15 @@ const Pagination = () => {
     // 如果總頁數為0，return
     if (!totalPages) return
 
+    // 如果目前畫面顯示的頁籤長度大於currentPage，return
+    if (paginationRange.length > currentPage) return
+
     // 1) pagination最多一次顯示不超過3頁
     const paginationLength =
       currentPage > 5 ? currentPage : Math.min(totalPages, 5)
     // 2) 設定pagination array，ex: [1, 2, 3]
     setPaginationRange(sequenceArray(paginationLength, 1))
-  }, [totalPages, currentPage])
+  }, [totalPages, currentPage, paginationRange])
 
   useEffect(() => {
     // 如果paginationRange的長度為0，不執行接下來的步驟
